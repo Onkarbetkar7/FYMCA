@@ -1,0 +1,263 @@
+$ git config --global user.name "Prem3903"
+
+$ git config --global user.email "prempatil3903@gmail.com"
+
+$ git init
+
+$ git status
+
+$ git add Prem
+
+$ git commit -m "First Commit"
+
+$ git branch prembranch
+
+$ git checkout prembranch
+
+$ git log
+
+$ git checkout master
+
+$ git remote set-url origin https://github.com/Prem3903/MCA_DevOps.git
+
+$ git branch
+
+$ git push -u origin master
+
+
+============================================To Push Files In Your Repository======================================
+
+
+$ cd "D:\Pratikkk"
+
+$ git init
+
+$ git remote add origin https://github.com/Prem3903/sample.git
+
+$ git remote set-url origin https://github.com/Prem3903/sample.git
+
+$ git status
+
+$ git add .
+
+$ git commit -m "Files added"
+
+$ git push -u origin master
+
+
+==================================Cloning Shared Repository==============
+$ cd d:
+
+$ cd DevOps
+
+$ git clone https://github.com/Apoorva9594/apoorvaa.git
+
+$ git branch -r
+
+$ cd apoorvaa
+
+$ git branch -r
+ 
+$ git branch -a
+
+$ git checkout -b prembranch
+
+$ git status
+
+$ git add Calories.csv
+
+$ git commit -m "Added a csv file"
+
+$ git push -u origin prembranch
+
+$ git checkout main
+
+$ git pull origin prembranch
+
+
+
+================================================Jenkins Code===============================
+
+=============For Public Repository=================
+
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your/repo.git'
+            }
+        }
+        // other stages...
+    }
+}
+
+===========For Private Repository====================
+
+pipeline {
+ agent any
+ environment {
+ PROJECT_NAME = "MyApp"
+ }
+ stages {
+ stage('Checkout') {
+ steps {
+ git credentialsId: 'github-pat1',
+ branch: 'main',
+ url: 'https://github.com/Prem3903/MCA_DevOps.git'
+ echo "Successfully pulled the code from ${env.PROJECT_NAME}"
+ }
+ }
+ }
+}
+
+
+===========docker commands====================
+
+docker pull hello-world
+
+docker run hello-world
+
+docker ps
+
+docker ps -a
+
+docker images
+
+docker stop <container_id>
+
+docker start <container_id>
+
+docker run -d -p 8080:80 nginx
+
+=============Develop a simple containerized application using Docker==========================
+
+
+mkdir html_nginx
+
+cd html_nginx
+
+# Create index.html
+echo "<h1>Hello from Docker</h1>" > index.html
+
+# Create Dockerfile
+cat <<EOF > Dockerfile
+FROM nginx
+COPY index.html /usr/share/nginx/html/index.html >EOF
+
+# TO Build
+docker build -t assignment4_divaroha .
+
+#To run:
+ docker run -d -p 3000:80 assignment4_divaroha
+
+================================DockerFile for Python App:========================
+
+mkdir python_app
+
+cd python_app
+
+# Create app.py
+
+cat <<EOF > app.py
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Hello from Python Docker!")
+
+HTTPServer(("", 80), handler).serve_forever()
+EOF
+
+# Create Dockerfile
+cat <<EOF > Dockerfile
+FROM python:3
+COPY app.py .
+CMD ["python", "app.py"]
+EOF
+
+
+#Build and Run:
+docker build -t python_app .
+docker run -d -p 80:80 python_ap
+
+
+
+================================Pull, Edit and Push an image from Docker hub(ubuntu)=====================
+
+
+#1: Pulling and running the image using “docker pull” and “docker run”  commands
+
+docker pull ubuntu
+
+docker run -it -d ubuntu:latest
+
+docker ps
+
+#2: Creating a folder and a file in the ubuntu image
+
+docker exec -it <container ID> bash
+
+#3: Commiting the image using “docker commit” command
+
+docker ps
+
+#4: Tagging the image using “docker tag” command
+
+Docker tag <name> <username/repository name >
+
+#5: Logging into docker hub using “docker login” command 
+
+docker login
+
+#6: Pushing the image using “docker push” command
+
+docker push <username/repository name>
+
+#7: Checking dockerhub repository
+
+docker images
+
+
+========================MySQL in Docker================================
+#Pull MySQL Image:
+#Command:
+docker pull MySQL
+
+#Run MySQL with Parameters:
+#Command: 
+docker run -d --name mysqltest -e 
+MYSQL_ROOT_PASSWORD=pass123 -e MYSQL_DATABASE=student_db 
+-p 3306:3306 MySQL
+
+#Connect to MySQL:
+#Command: 
+docker exec -it mysqltest mysql -u root -p
+# enter password: pass123
+
+
+#Create Table:
+#Command:
+
+USE student_db;
+
+CREATE TABLE student (id INT, name VARCHAR(20));
+
+INSERT INTO student VALUES (1, 'divaroha');
+
+# values:
+#Command:
+
+INSERT INTO student VALUES (1, 'divaroha');
+
+#Dump the Database:
+#Command: 
+
+docker exec mysqltest sh -c 'exec mysqldump -u root -ppass123 
+student_db' > dump.sql
+
+
+
+
